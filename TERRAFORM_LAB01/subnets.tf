@@ -17,6 +17,17 @@
 #
 # ==============================================
 
+resource "aws_subnet" "public_subnet" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.public_subnet_cidr
+  map_public_ip_on_launch = true # Makes it a public subnet
+  availability_zone       = var.public_az
+
+  tags = {
+    Name = "hosa-PublicSubnet-01"
+  }
+}
+
 
 
 # ==============================================
