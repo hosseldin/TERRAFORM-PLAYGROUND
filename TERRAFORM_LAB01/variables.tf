@@ -61,7 +61,7 @@ variable "instance_type" {
 
 # Variable for the AMI
 variable "ami_id" {
-  default = "ami-12345678"
+  default = "ami-04b4f1a9cf54c11d0" # Choose an Ubuntu AMI for your region
 }
 
 # # Variable for the key-pair name
