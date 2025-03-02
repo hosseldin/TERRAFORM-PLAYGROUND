@@ -19,16 +19,26 @@
 
 # Starting the implementation of the EC2 Instance
 resource "aws_instance" "bastion" {
-  ami             = var.ami_id
-  instance_type   = var.instance_type
-  subnet_id       = aws_subnet.public_subnet.id
-  security_groups = [aws_security_group.bastion_sg.name]
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  subnet_id              = aws_subnet.public_subnet.id
+  vpc_security_group_ids = [aws_security_group.bastion_sg.id]
 
   tags = {
     Name = "Hosa Bastion Host"
   }
 }
 
+resource "aws_instance" "private" {
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  subnet_id              = aws_subnet.private_subnet.id
+  vpc_security_group_ids = [aws_security_group.private_sg.id]
+
+  tags = {
+    Name = "Application Server"
+  }
+}
 
 
 # ==============================================
