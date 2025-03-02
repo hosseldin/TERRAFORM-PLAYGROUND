@@ -25,13 +25,32 @@ variable "vpc_cidr" {
 
 # Variable for the Public Subnet
 variable "public_subnet_cidr" {
-  default = "10.0.1.0/24"
+  default     = "10.0.1.0/24"
+  type        = string
+  description = "CIDR block for the public subnet"
 }
 
 # Variable for the Private Subnet
 variable "private_subnet_cidr" {
-  default = "10.0.2.0/24"
+  default     = "10.0.2.0/24"
+  type        = string
+  description = "CIDR block for the private subnet"
 }
+
+# Variable for the Public Availability Zone
+variable "public_az" {
+  default     = "us-east-1a"
+  type        = string
+  description = "Availability Zone for public subnet"
+}
+
+# Variable for the Private Availability Zone
+variable "private_az" {
+  default     = "us-east-1a"
+  type        = string
+  description = "Availability Zone for private subnet"
+}
+
 
 # Won't need variables for igw , route table, route, since they are tied to the vpc
 
