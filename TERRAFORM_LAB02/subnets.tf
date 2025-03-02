@@ -20,13 +20,14 @@
 resource "aws_subnet" "subnets" {
   for_each = var.subnets
 
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = each.value.cidr_block
-  availability_zone       = each.value.availability_zone
-  map_public_ip_on_launch = each.value.is_public # Makes it a public subnet
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = each.value.cidr_block
+  availability_zone = each.value.availability_zone
+
+  map_public_ip_on_launch = each.value.is_public ? true : false # Makes it a public subnet
 
   tags = {
-    Name = "each.value.name"
+    Name = each.value.name
   }
 }
 
