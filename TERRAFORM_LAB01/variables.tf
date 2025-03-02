@@ -45,10 +45,10 @@ variable "ami_id" {
   default = "ami-12345678"
 }
 
-# Variable for the key-pair name
-variable "key_name" {
-  description = "SSH key name"
-}
+# # Variable for the key-pair name
+# variable "key_name" {
+#   description = "SSH key name"
+# }
 
 # ==============================================
 #
