@@ -48,7 +48,6 @@ variable "subnets" {
 }
 
 
-
 # Won't need variables for igw , route table, route, since they are tied to the vpc
 
 # Variable for the EC2 Instance type

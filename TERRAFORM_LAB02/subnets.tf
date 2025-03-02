@@ -21,25 +21,14 @@ resource "aws_subnet" "subnets" {
   for_each = var.subnets
 
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_cidr
-  map_public_ip_on_launch = true # Makes it a public subnet
-  availability_zone       = var.public_az
+  cidr_block              = each.value.cidr_block
+  availability_zone       = each.value.availability_zone
+  map_public_ip_on_launch = each.value.is_public # Makes it a public subnet
 
   tags = {
-    Name = "hosa-PublicSubnet-01"
+    Name = "each.value.name"
   }
 }
-
-resource "aws_subnet" "private_subnet" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnet_cidr
-  availability_zone = var.private_az
-
-  tags = {
-    Name = "hosa-PrivateSubnet-01"
-  }
-}
-
 
 # ==============================================
 #
