@@ -5,9 +5,9 @@
 # ==============================================
 #
 # Created By: Hossam Mahmoud
-# Date: 2025-02-28
-# Filename: main.tf
-# Description: Calls the networking and compute modules
+# Date: 2025-03-03
+# Filename: variables.tf
+# Description: 
 # Version: 1.0.0
 # Copyright (c) 2025 Hossam. All rights reserved.
 #
@@ -17,24 +17,13 @@
 #
 # ==============================================
 
-module "vpc" {
-  source   = "./modules/vpc"
-  vpc_cidr = var.vpc_cidr
-  vpc_name = "hosa-vpc-module"
+variable "vpc_cidr" {
+
 }
 
-module "subnets" {
-  source  = "./modules/subnets"
-  vpc_id  = module.vpc.vpc_id
-  subnets = var.subnets
+variable "vpc_name" {
+
 }
-
-terraform {
-  backend "s3" {
-
-  }
-}
-
 
 # ==============================================
 #

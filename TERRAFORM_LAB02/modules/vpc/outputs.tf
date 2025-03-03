@@ -5,9 +5,9 @@
 # ==============================================
 #
 # Created By: Hossam Mahmoud
-# Date: 2025-02-28
-# Filename: vpc.tf
-# Description: Terraform file for the vpc
+# Date: 2025-03-03
+# Filename: outputs.tf
+# Description: 
 # Version: 1.0.0
 # Copyright (c) 2025 Hossam. All rights reserved.
 #
@@ -17,11 +17,8 @@
 #
 # ==============================================
 
-resource "aws_vpc" "main" {
-  cidr_block = var.vpc_cidr
-  tags = {
-    Name = "hosa-vpc-01"
-  }
+output "vpc_id" {
+  value = aws_vpc.main.id
 }
 
 # ==============================================
@@ -38,4 +35,3 @@ resource "aws_vpc" "main" {
 # ============= TERRAFORM FILE END =============
 #
 # ==============================================
-

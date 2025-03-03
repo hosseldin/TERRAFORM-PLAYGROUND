@@ -5,9 +5,9 @@
 # ==============================================
 #
 # Created By: Hossam Mahmoud
-# Date: 2025-02-28
+# Date: 2025-03-03
 # Filename: main.tf
-# Description: Calls the networking and compute modules
+# Description: 
 # Version: 1.0.0
 # Copyright (c) 2025 Hossam. All rights reserved.
 #
@@ -17,23 +17,17 @@
 #
 # ==============================================
 
-module "vpc" {
-  source   = "./modules/vpc"
-  vpc_cidr = var.vpc_cidr
-  vpc_name = "hosa-vpc-module"
-}
+resource "aws_vpc" "main" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 
-module "subnets" {
-  source  = "./modules/subnets"
-  vpc_id  = module.vpc.vpc_id
-  subnets = var.subnets
-}
-
-terraform {
-  backend "s3" {
-
+  tags = {
+    Name = var.vpc_name
   }
 }
+
+
 
 
 # ==============================================

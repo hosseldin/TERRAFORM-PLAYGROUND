@@ -17,6 +17,10 @@
 #
 # ==============================================
 
+variable "environment" {
+  default = terraform.workspace
+}
+
 # Variable for the VPC
 variable "vpc_cidr" {
   type = string
