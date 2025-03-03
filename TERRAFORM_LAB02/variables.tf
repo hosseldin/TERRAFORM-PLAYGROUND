@@ -19,8 +19,7 @@
 
 # Variable for the VPC
 variable "vpc_cidr" {
-  default     = "10.0.0.0/16"
-  description = "CIDR block for the VPC"
+  type = string
 }
 
 # Will create subnets using for_each
