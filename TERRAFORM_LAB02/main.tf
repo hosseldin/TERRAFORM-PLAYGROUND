@@ -30,7 +30,7 @@ module "subnets" {
 }
 
 module "security_groups" {
-  source   = "./modules/security-groups"
+  source   = "./modules/security_groups"
   vpc_id   = module.vpc.vpc_id
   vpc_cidr = var.vpc_cidr
 }
@@ -44,11 +44,7 @@ module "instances" {
   sg_id         = module.security_groups.sg_id
 }
 
-terraform {
-  backend "s3" {
 
-  }
-}
 
 
 # ==============================================

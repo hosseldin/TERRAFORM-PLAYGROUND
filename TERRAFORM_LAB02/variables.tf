@@ -17,7 +17,7 @@
 #
 # ==============================================
 
-variable "environment" {
+locals {
   default = terraform.workspace
 }
 
