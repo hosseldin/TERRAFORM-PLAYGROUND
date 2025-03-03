@@ -6,7 +6,7 @@
 #
 # Created By: Hossam Mahmoud
 # Date: 2025-03-03
-# Filename: variables.tf
+# Filename: main.tf
 # Description: 
 # Version: 1.0.0
 # Copyright (c) 2025 Hossam. All rights reserved.
@@ -17,17 +17,20 @@
 #
 # ==============================================
 
-variable "vpc_id" {
+resource "aws_instance" "instances" {
+  count = length(var.instances)
 
+  ami             = var.ami
+  instance_type   = var.instance_type
+  subnet_id       = element(var.subnet_ids, count.index)
+  security_groups = [var.sg_id]
+
+  tags = {
+    Name = var.instances[count.index]
+  }
 }
 
-variable "subnets" {
-  type = list(object({
-    cidr              = string
-    availability_zone = string
-    public            = bool
-  }))
-}
+
 
 # ==============================================
 #

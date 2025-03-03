@@ -20,14 +20,13 @@
 variable "vpc_id" {
 
 }
+variable "vpc_cidr" {
 
-variable "subnets" {
-  type = list(object({
-    cidr              = string
-    availability_zone = string
-    public            = bool
-  }))
 }
+
+
+
+
 
 # ==============================================
 #

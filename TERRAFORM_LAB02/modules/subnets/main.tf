@@ -27,7 +27,7 @@ resource "aws_vpc" "subnets" {
   map_public_ip_on_launch = each.value.is_public ? true : false # Makes it a public subnet
 
   tags = {
-    Name = each.value.name
+    Name = each.key
   }
 }
 

@@ -20,13 +20,28 @@
 module "vpc" {
   source   = "./modules/vpc"
   vpc_cidr = var.vpc_cidr
-  vpc_name = "hosa-vpc-module"
+  vpc_name = var.vpc_name
 }
 
 module "subnets" {
   source  = "./modules/subnets"
   vpc_id  = module.vpc.vpc_id
   subnets = var.subnets
+}
+
+module "security_groups" {
+  source   = "./modules/security-groups"
+  vpc_id   = module.vpc.vpc_id
+  vpc_cidr = var.vpc_cidr
+}
+
+module "instances" {
+  source        = "./modules/instances"
+  ami           = var.ami
+  instance_type = var.instance_type
+  subnet_ids    = values(module.subnets.subnet_ids)
+  instances     = var.instances
+  sg_id         = module.security_groups.sg_id
 }
 
 terraform {
