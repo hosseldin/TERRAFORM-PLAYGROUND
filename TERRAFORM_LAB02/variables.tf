@@ -21,33 +21,27 @@ locals {
   default = terraform.workspace
 }
 
+variable "vpc_name" {
+  description = "The name of the VPC"
+  type        = string
+}
+
+
 # Variable for the VPC
 variable "vpc_cidr" {
-  type = string
+  description = "CIDR block for the VPC"
+  type        = string
 }
 
 # Will create subnets using for_each
 variable "subnets" {
-  type = map(object({
+  description = "List of Subnets"
+  type = list(object({
     name              = string
     cidr_block        = string
     availability_zone = string
     is_public         = bool
   }))
-  default = {
-    "public-subnet-1" = {
-      name              = "hosa-PublicSubnet-01"
-      cidr_block        = "10.0.1.0/24"
-      availability_zone = "us-east-1a"
-      is_public         = true
-    }
-    "private-subnet-1" = {
-      name              = "hosa-PrivateSubnet-01"
-      cidr_block        = "10.0.2.0/24"
-      availability_zone = "us-east-1a"
-      is_public         = false
-    }
-  }
 }
 
 
@@ -60,7 +54,8 @@ variable "instance_type" {
 
 # Variable for the AMI
 variable "ami_id" {
-  default = "ami-04b4f1a9cf54c11d0" # Choose an Ubuntu AMI for your region
+  description = "Amazon Machine Image ID for instances"
+  type        = string
 }
 
 # # Variable for the key-pair name
