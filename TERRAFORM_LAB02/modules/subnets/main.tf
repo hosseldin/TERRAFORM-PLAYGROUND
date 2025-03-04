@@ -17,17 +17,19 @@
 #
 # ==============================================
 
-resource "aws_vpc" "subnets" {
-  for_each = var.subnets
+resource "aws_subnet" "subnets" {
+  for_each = {
+    for subnet in var.subnets : subnet.name => subnet
+  }
 
-  vpc_id            = var.vpc_id
-  cidr_block        = each.value.cidr_block
-  availability_zone = each.value.availability_zone
-
-  map_public_ip_on_launch = each.value.is_public ? true : false # Makes it a public subnet
+  vpc_id                  = var.vpc_id
+  cidr_block              = each.value.cidr_block
+  availability_zone       = each.value.availability_zone
+  map_public_ip_on_launch = each.value.type == "public" ? true : false # Makes it a public subnet
 
   tags = {
-    Name = each.key
+    Name = each.value.name
+    Type = each.value.type
   }
 }
 

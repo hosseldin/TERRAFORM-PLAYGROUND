@@ -17,18 +17,16 @@
 #
 # ==============================================
 
-resource "aws_instance" "instances" {
-  count = length(var.instances)
-
-  ami             = var.ami
-  instance_type   = var.instance_type
-  subnet_id       = element(var.subnet_ids, count.index)
-  security_groups = [var.sg_id]
+resource "aws_instance" "this" {
+  count         = length(var.instances)
+  ami           = var.instances[count.index].ami
+  instance_type = var.instances[count.index].instance_type
 
   tags = {
-    Name = var.instances[count.index]
+    Name = var.instances[count.index].name
   }
 }
+
 
 
 

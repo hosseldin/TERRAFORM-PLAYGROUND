@@ -17,23 +17,14 @@
 #
 # ==============================================
 
-variable "ami" {
-
-}
-variable "instance_type" {
-
-}
-variable "subnet_ids" {
-  type = list(string)
-}
 variable "instances" {
-  type = list(string)
+  description = "List of instances to create"
+  type = list(object({
+    name          = string
+    ami           = string
+    instance_type = string
+  }))
 }
-variable "sg_id" {
-
-}
-
-
 
 # ==============================================
 #

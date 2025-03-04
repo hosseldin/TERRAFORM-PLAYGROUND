@@ -21,11 +21,15 @@ variable "vpc_id" {
 
 }
 
+
+# Will create subnets using for_each
 variable "subnets" {
+  description = "List of Subnets"
   type = list(object({
-    cidr              = string
+    name              = string
+    cidr_block        = string
     availability_zone = string
-    public            = bool
+    type              = string
   }))
 }
 

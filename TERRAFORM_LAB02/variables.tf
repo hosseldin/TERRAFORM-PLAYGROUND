@@ -40,7 +40,7 @@ variable "subnets" {
     name              = string
     cidr_block        = string
     availability_zone = string
-    is_public         = bool
+    type              = string
   }))
 }
 
@@ -48,15 +48,15 @@ variable "subnets" {
 # Won't need variables for igw , route table, route, since they are tied to the vpc
 
 # Variable for the EC2 Instance type
-variable "instance_type" {
-  default = "t2.micro"
+variable "instances" {
+  description = "List of instances to create"
+  type = list(object({
+    name          = string
+    ami           = string
+    instance_type = string
+  }))
 }
 
-# Variable for the AMI
-variable "ami_id" {
-  description = "Amazon Machine Image ID for instances"
-  type        = string
-}
 
 # # Variable for the key-pair name
 # variable "key_name" {

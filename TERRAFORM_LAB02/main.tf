@@ -36,12 +36,8 @@ module "security_groups" {
 }
 
 module "instances" {
-  source        = "./modules/instances"
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  subnet_ids    = values(module.subnets.subnet_ids)
-  instances     = var.instances
-  sg_id         = module.security_groups.sg_id
+  source    = "./modules/instances"
+  instances = var.instances
 }
 
 
