@@ -21,6 +21,12 @@ locals {
   default = terraform.workspace
 }
 
+variable "region" {
+  description = "The AWS region to deploy resources in"
+  type        = string
+}
+
+
 variable "vpc_name" {
   description = "The name of the VPC"
   type        = string
@@ -34,12 +40,45 @@ variable "vpc_cidr" {
 }
 
 
-variable "public_subnet_cidr" {}
-variable "private_subnet_cidr" {}
-variable "availability_zone" {}
+variable "subnet_configs" {
+  description = "Subnet configurations (public and private)"
+  type = map(object({
+    cidr_block = string
+    az         = string
+    is_public  = bool
+  }))
+}
 
-variable "ami_id" {}
-variable "instance_type" {}
+
+variable "security_rules" {
+  description = "Security group rules"
+  type = map(object({
+    ingress = list(object({
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+    egress = list(object({
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_blocks = list(string)
+    }))
+  }))
+}
+
+
+variable "instances" {
+  description = "List of instances"
+  type = list(object({
+    name          = string
+    ami           = string
+    instance_type = string
+    subnet_name   = string
+    security_name = string
+  }))
+}
 
 
 

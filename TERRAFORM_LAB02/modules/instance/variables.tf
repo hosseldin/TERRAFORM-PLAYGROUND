@@ -17,6 +17,16 @@
 #
 # ==============================================
 
+variable "subnet_ids" {
+  description = "Mapping of subnet names to IDs"
+  type        = map(string)
+}
+
+variable "security_ids" {
+  description = "Mapping of security group names to IDs"
+  type        = map(string)
+}
+
 variable "instances" {
   description = "List of instances to create"
   type = list(object({
@@ -24,12 +34,8 @@ variable "instances" {
     ami           = string
     instance_type = string
     subnet_id     = string
+    security_name = string
   }))
-}
-
-variable "subnet_ids" {
-  description = "List of Subnet IDs where instances will be deployed"
-  type        = list(string)
 }
 
 # ==============================================

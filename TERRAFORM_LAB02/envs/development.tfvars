@@ -35,8 +35,33 @@ subnet_configs = {
   }
 }
 
-ami_id        = "ami-04b4f1a9cf54c11d0"
-instance_type = "t2.micro"
+security_rules = [
+  {
+    name        = "allow-ssh"
+    description = "Allow SSH access"
+    port        = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  },
+  {
+    name        = "allow-http"
+    description = "Allow HTTP access"
+    port        = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+]
+
+
+instances = [
+  {
+    name          = "app-server-1"
+    ami           = "ami-04b4f1a9cf54c11d0"
+    instance_type = "t2.micro"
+    subnet_name   = "public-subnet-1"
+    security_name = "web-sg"
+  }
+]
 
 # instances = [
 #   {

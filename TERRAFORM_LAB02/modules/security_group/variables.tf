@@ -16,12 +16,19 @@
 # ====== TERRAFORM IMPLEMENTATION START ======
 #
 # ==============================================
-
-variable "vpc_id" {
-
-}
 variable "vpc_cidr" {
 
+}
+
+variable "security_rules" {
+  description = "List of security group rules"
+  type = list(object({
+    name        = string
+    description = string
+    port        = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
 }
 
 

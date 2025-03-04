@@ -28,34 +28,20 @@ module "vpc" {
   subnet_configs = var.subnet_configs
 }
 
+module "security_group" {
+  source         = "./modules/security_group"
+  vpc_cidr       = module.vpc.vpc_cidr
+  security_rules = var.security_rules
+}
 
-module "instances" {
-  source = "./modules/instance"
-  instances = [
-    {
-      name          = "app-server-1"
-      ami           = var.ami_id
-      instance_type = var.instance_type
-      subnet_id     = module.vpc.subnet_ids["public-subnet-1"]
-    },
-    {
-      name          = "app-server-2"
-      ami           = var.ami_id
-      instance_type = var.instance_type
-      subnet_id     = module.vpc.subnet_ids["private-subnet-1"]
-    }
-  ]
+module "instance" {
+  source       = "./modules/instance"
+  instances    = var.instances
+  subnet_ids   = module.vpc.subnet_ids
+  security_ids = module.security_group.security_ids
 }
 
 
-
-
-
-module "security_groups" {
-  source   = "./modules/security_groups"
-  vpc_id   = module.vpc.vpc_id
-  vpc_cidr = var.vpc_cidr
-}
 
 
 # ==============================================

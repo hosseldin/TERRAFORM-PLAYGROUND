@@ -33,7 +33,7 @@ resource "aws_subnet" "subnets" {
   map_public_ip_on_launch = each.value.is_public
 
   tags = {
-    Name = "each.key"
+    Name = each.key
   }
 }
 
