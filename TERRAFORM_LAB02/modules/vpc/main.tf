@@ -24,24 +24,16 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_subnet" "public_subnet" {
+resource "aws_subnet" "subnets" {
+  for_each = var.subnet_configs
+
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.public_subnet_cidr
-  availability_zone       = var.availability_zone
-  map_public_ip_on_launch = true
+  cidr_block              = each.value.cidr_block
+  availability_zone       = each.value.az
+  map_public_ip_on_launch = each.value.is_public
 
   tags = {
-    Name = "Public Subnet"
-  }
-}
-
-resource "aws_subnet" "private_subnet" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnet_cidr
-  availability_zone = var.availability_zone
-
-  tags = {
-    Name = "Private Subnet"
+    Name = "each.key"
   }
 }
 
@@ -63,7 +55,8 @@ resource "aws_route_table" "public_rt" {
 }
 
 resource "aws_route_table_association" "public_assoc" {
-  subnet_id      = aws_subnet.public_subnet.id
+  for_each       = { for k, v in var.subnet_configs : k => v if v.is_public }
+  subnet_id      = aws_subnet.subnets[each.key].id
   route_table_id = aws_route_table.public_rt.id
 }
 

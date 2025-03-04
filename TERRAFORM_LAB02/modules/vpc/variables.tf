@@ -19,9 +19,14 @@
 
 variable "vpc_cidr" {}
 variable "vpc_name" {}
-variable "public_subnet_cidr" {}
-variable "private_subnet_cidr" {}
-variable "availability_zone" {}
+variable "subnet_configs" {
+  type = map(object({
+    cidr_block = string
+    az         = string
+    is_public  = bool
+  }))
+}
+
 
 # ==============================================
 #

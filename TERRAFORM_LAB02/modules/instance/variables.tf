@@ -5,8 +5,8 @@
 # ==============================================
 #
 # Created By: Hossam Mahmoud
-# Date: 2025-03-02
-# Filename: providers.tf
+# Date: 2025-03-03
+# Filename: variables.tf
 # Description: 
 # Version: 1.0.0
 # Copyright (c) 2025 Hossam. All rights reserved.
@@ -17,8 +17,19 @@
 #
 # ==============================================
 
-provider "aws" {
-  region = var.region
+variable "instances" {
+  description = "List of instances to create"
+  type = list(object({
+    name          = string
+    ami           = string
+    instance_type = string
+    subnet_id     = string
+  }))
+}
+
+variable "subnet_ids" {
+  description = "List of Subnet IDs where instances will be deployed"
+  type        = list(string)
 }
 
 # ==============================================

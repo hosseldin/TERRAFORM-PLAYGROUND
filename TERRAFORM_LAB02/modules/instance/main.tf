@@ -6,7 +6,7 @@
 #
 # Created By: Hossam Mahmoud
 # Date: 2025-03-03
-# Filename: variables.tf
+# Filename: main.tf
 # Description: 
 # Version: 1.0.0
 # Copyright (c) 2025 Hossam. All rights reserved.
@@ -17,19 +17,20 @@
 #
 # ==============================================
 
-variable "instances" {
-  description = "List of instances to create"
-  type = list(object({
-    name          = string
-    ami           = string
-    instance_type = string
-  }))
+resource "aws_instance" "ec2" {
+  count = length(var.instances)
+
+  ami           = var.instances[count.index].ami
+  instance_type = var.instances[count.index].instance_type
+  subnet_id     = var.instances[count.index].subnet_id
+
+  tags = {
+    Name = var.instances[count.index].name
+  }
 }
 
-variable "subnet_ids" {
-  description = "List of Subnet IDs where instances will be deployed"
-  type        = list(string)
-}
+
+
 
 # ==============================================
 #
