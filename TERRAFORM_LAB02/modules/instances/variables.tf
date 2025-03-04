@@ -26,6 +26,11 @@ variable "instances" {
   }))
 }
 
+variable "subnet_ids" {
+  description = "List of Subnet IDs where instances will be deployed"
+  type        = list(string)
+}
+
 # ==============================================
 #
 # ======= TERRAFORM IMPLEMENTATION END ========

@@ -36,8 +36,9 @@ module "security_groups" {
 }
 
 module "instances" {
-  source    = "./modules/instances"
-  instances = var.instances
+  source     = "./modules/instances"
+  instances  = var.instances
+  subnet_ids = module.subnets.subnet_ids
 }
 
 

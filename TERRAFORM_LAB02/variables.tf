@@ -54,6 +54,7 @@ variable "instances" {
     name          = string
     ami           = string
     instance_type = string
+    subnet_ids    = list(string)
   }))
 }
 
