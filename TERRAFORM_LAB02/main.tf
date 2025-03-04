@@ -17,29 +17,51 @@
 #
 # ==============================================
 
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
 provider "aws" {
-  region = var.region
+  region = var.aws_region
 }
 
 module "vpc" {
-  source         = "./modules/vpc"
-  vpc_cidr       = var.vpc_cidr
-  vpc_name       = var.vpc_name
-  subnet_configs = var.subnet_configs
+  source   = "./modules/vpc"
+  vpc_cidr = var.vpc_cidr
 }
 
 module "security_group" {
-  source         = "./modules/security_group"
-  vpc_cidr       = module.vpc.vpc_cidr
-  security_rules = var.security_rules
+  source        = "./modules/security_group"
+  vpc_id        = module.vpc.vpc_id
+  ingress_rules = var.ingress_rules
+  egress_rules  = var.egress_rules
 }
 
-module "instance" {
-  source       = "./modules/instance"
-  instances    = var.instances
-  subnet_ids   = module.vpc.subnet_ids
-  security_ids = module.security_group.security_ids
+module "instances" {
+  source = "./modules/instance"
+  instances = [
+    {
+      name              = "app-server-1"
+      ami               = var.ami_id
+      instance_type     = var.instance_type
+      subnet_id         = module.vpc.public_subnet_id
+      security_group_id = module.security_group.security_group_id
+    },
+    {
+      name              = "app-server-2"
+      ami               = var.ami_id
+      instance_type     = var.instance_type
+      subnet_id         = module.vpc.private_subnet_id
+      security_group_id = module.security_group.security_group_id
+    }
+  ]
 }
+
 
 
 

@@ -16,20 +16,41 @@
 # ====== TERRAFORM IMPLEMENTATION START ======
 #
 # ==============================================
-variable "vpc_cidr" {
-
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID to associate the security group with"
 }
 
-variable "security_rules" {
-  description = "List of security group rules"
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID to associate the security group with"
+}
+
+variable "ingress_rules" {
   type = list(object({
-    name        = string
-    description = string
     port        = number
     protocol    = string
     cidr_blocks = list(string)
   }))
+  description = "List of ingress rules"
 }
+
+variable "egress_rules" {
+  type = list(object({
+    port        = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+  description = "List of egress rules"
+  default = [
+    {
+      port        = 0
+      protocol    = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  ]
+}
+
 
 
 

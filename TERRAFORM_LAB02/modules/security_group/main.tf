@@ -18,25 +18,29 @@
 # ==============================================
 
 resource "aws_security_group" "sg" {
-
   vpc_id = var.vpc_id
-  name   = "custom-security-group"
 
   dynamic "ingress" {
-    for_each = var.security_rules
+    for_each = var.ingress_rules
     content {
-      description = ingress.value.description
-      from_port   = ingress.value.from_port
-      to_port     = ingress.value.to_port
+      from_port   = ingress.value.port
+      to_port     = ingress.value.port
       protocol    = ingress.value.protocol
       cidr_blocks = ingress.value.cidr_blocks
     }
   }
 
-  tags = {
-    Name = "security-group"
+  dynamic "egress" {
+    for_each = var.egress_rules
+    content {
+      from_port   = egress.value.port
+      to_port     = egress.value.port
+      protocol    = egress.value.protocol
+      cidr_blocks = egress.value.cidr_blocks
+    }
   }
 }
+
 
 # ==============================================
 #
