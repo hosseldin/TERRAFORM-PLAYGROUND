@@ -33,36 +33,50 @@ variable "vpc_cidr" {
   type        = string
 }
 
+
+variable "public_subnet_cidr" {}
+variable "private_subnet_cidr" {}
+variable "availability_zone" {}
+
+variable "ami_id" {}
+variable "instance_type" {}
+
+
+
+
+
+
+
+
+
+
+
 # Will create subnets using for_each
-variable "subnets" {
-  description = "List of Subnets"
-  type = list(object({
-    name              = string
-    cidr_block        = string
-    availability_zone = string
-    type              = string
-  }))
-}
+# variable "subnets" {
+#   description = "List of Subnets"
+#   type = list(object({
+#     name              = string
+#     cidr_block        = string
+#     availability_zone = string
+#     type              = string
+#   }))
+# }
 
 
 # Won't need variables for igw , route table, route, since they are tied to the vpc
 
 # Variable for the EC2 Instance type
-variable "instances" {
-  description = "List of instances to create"
-  type = list(object({
-    name          = string
-    ami           = string
-    instance_type = string
-    subnet_ids    = list(string)
-  }))
-}
-
-
-# # Variable for the key-pair name
-# variable "key_name" {
-#   description = "SSH key name"
+# variable "instances" {
+#   description = "List of instances to create"
+#   type = list(object({
+#     name          = string
+#     ami           = string
+#     instance_type = string
+#     subnet_ids    = list(string)
+#   }))
 # }
+
+
 
 # ==============================================
 #

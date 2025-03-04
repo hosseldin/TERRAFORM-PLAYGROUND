@@ -5,8 +5,8 @@
 # ==============================================
 #
 # Created By: Hossam Mahmoud
-# Date: 2025-03-02
-# Filename: providers.tf
+# Date: 2025-03-04
+# Filename: outputs.tf
 # Description: 
 # Version: 1.0.0
 # Copyright (c) 2025 Hossam. All rights reserved.
@@ -17,8 +17,16 @@
 #
 # ==============================================
 
-provider "aws" {
-  region = var.region
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}
+
+output "public_instance_id" {
+  value = module.public_instance.instance_id
+}
+
+output "private_instance_id" {
+  value = module.private_instance.instance_id
 }
 
 # ==============================================
